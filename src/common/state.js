@@ -1,6 +1,6 @@
 const initialState = {
     rows: [],
-    error: {},
+    error: '',
     errorSnackbar: false
 };
 
