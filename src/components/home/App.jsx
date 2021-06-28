@@ -53,7 +53,7 @@ const App = () => {
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 {/* error message */}
                 <Alert onClose={handleClose} severity="error">
-                    {error.message}
+                    {error}
                 </Alert>
             </Snackbar>
             {/* headers */}
