@@ -2,15 +2,16 @@ import bomEndpoints from '../common/data/bom-endpoints';
 
 const getBomData = async (endpoint) => {
     if (bomEndpoints.includes(endpoint)) {
-        const response = await fetch(endpoint, {
-            mode: 'no-cors',
+        const response = await fetch('/v1/bom', {
+            body: JSON.stringify({ url: endpoint }),
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        return response.json();
+        // console.log(apiResponse);
+        return response;
     } else {
-        console.log('error with something idk');
         return Promise.reject('Endpoint could not be found');
     }
 };

@@ -22,11 +22,14 @@ const App = () => {
         bomEndpoints.forEach((endpoint) => {
             getBomData(endpoint)
                 // foreach endpoint, getBomData, append to the array (rows)
-                .then((data) => {
-                    console.log(data); // JSON data parsed by `data.json()` call
-                    setRows((prevState) => ({
-                        rows: [...prevState.rows, data],
-                    })); // append to existing state
+                .then(async (response) => {
+                    if (!response.ok) {
+                        return Promise.reject(response);
+                    }
+                    const data = await response.json();
+                    const dataObj = data.observations.data[0];
+                    dataObj.link = endpoint;
+                    setRows((oldRows) => [...oldRows, dataObj]); // append to existing state
                 })
                 // if error, setError, which should diplay Snackbar with error message (use default from spec)
                 .catch((err) => {

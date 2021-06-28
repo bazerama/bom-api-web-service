@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -45,16 +46,35 @@ const DataTable = ({ rows = {}, error = {} }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.name}>
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell align="right">{row.apparent_t}</TableCell>
-                                    <TableCell align="right">{row.lat}</TableCell>
-                                    <TableCell align="right">{row.long}</TableCell>
-                                </TableRow>
-                            ))}
+                            {rows.map(
+                                (row) =>
+                                    row.name &&
+                                    row.name.length > 0 && (
+                                        <TableRow key={row.name}>
+                                            <TableCell component="th" scope="row">
+                                                <Link
+                                                    style={{
+                                                        textDecoration: 'none',
+                                                        color: 'blue',
+                                                    }}
+                                                    target="_blank"
+                                                    href={row.link}
+                                                >
+                                                    {row.name}
+                                                </Link>
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {row.apparent_t ? row.apparent_t : 'No Data'}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {row.lat ? row.lat : 'No Data'}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {row.lon ? row.lon : 'No Data'}
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                            )}
                         </TableBody>
                     </React.Fragment>
                 )}
