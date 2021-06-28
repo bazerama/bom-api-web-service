@@ -32,10 +32,12 @@ const App = () => {
                     setRows((oldRows) => [...oldRows, dataObj]); // append to existing state
                 })
                 // if error, setError, which should diplay Snackbar with error message (use default from spec)
-                .catch((err) => {
-                    console.log(err);
+                .catch((error) => {
+                    console.log(error);
+                    console.log(error.message);
+                    console.log(error.json());
                     setOpen(true);
-                    setError(err);
+                    setError(error);
                 });
         });
     }, []);
