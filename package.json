@@ -17,7 +17,7 @@
     },
     "scripts": {
         "start": "PORT=4001 react-scripts start",
-        "start:prod": "NODE_ENV=production PORT=4001 react-scripts start",
+        "start:prod": "NODE_ENV=production pm2 serve build 4001 --spa --name website",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
