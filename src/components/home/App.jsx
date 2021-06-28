@@ -61,10 +61,10 @@ const App = () => {
                 </Alert>
             </Snackbar>
             {/* headers */}
-            <Typography align="center" color="primary" variant="h2">
+            <Typography align="center" color="secondary" variant="h2">
                 BOM API Testing Website
             </Typography>
-            <Typography align="center" color="primary" variant="h4">
+            <Typography align="center" color="secondary" variant="h4">
                 Weather Data
             </Typography>
             <br />

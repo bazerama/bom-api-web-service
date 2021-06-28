@@ -5,7 +5,7 @@ import theme from './common/mui/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import reportWebVitals from './common/utils/reportWebVitals';
 
-document.body.style.backgroundColor = 'silver';
+document.body.style.backgroundColor = theme.palette.primary.main;
 
 ReactDOM.render(
     <React.StrictMode>
