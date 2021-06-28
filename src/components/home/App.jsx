@@ -34,6 +34,8 @@ const App = () => {
                 // if error, setError, which should diplay Snackbar with error message (use default from spec)
                 .catch(async (error) => {
                     const message = await error.json();
+                    console.log(message.error);
+                    console.log(error);
                     setOpen(true);
                     setError(`${error.status}: ${message.error}`);
                 });
