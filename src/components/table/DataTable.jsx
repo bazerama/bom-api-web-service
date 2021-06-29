@@ -9,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
@@ -17,7 +18,12 @@ const useStyles = makeStyles({
     },
 });
 
-const DataTable = ({ rows = {}, error = {} }) => {
+// sort by apparent_t ascending
+const sortFn = (x, y) => {
+    return x.apparent_t - y.apparent_t;
+};
+
+const DataTable = ({ data = {}, error = {}, tempMin = '' }) => {
     const classes = useStyles();
 
     return (
@@ -35,7 +41,9 @@ const DataTable = ({ rows = {}, error = {} }) => {
                                     Weather Station Name
                                 </TableCell>
                                 <TableCell style={{ fontWeight: 'bolder' }} align="right">
-                                    Apparent Temperature (°C)
+                                    <TableSortLabel active={true} direction={'asc'}>
+                                        Apparent Temperature (°C)
+                                    </TableSortLabel>
                                 </TableCell>
                                 <TableCell style={{ fontWeight: 'bolder' }} align="right">
                                     Latitude
@@ -46,35 +54,43 @@ const DataTable = ({ rows = {}, error = {} }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map(
-                                (row) =>
-                                    row.name &&
-                                    row.name.length > 0 && (
-                                        <TableRow key={row.name}>
-                                            <TableCell component="th" scope="row">
-                                                <Link
-                                                    style={{
-                                                        textDecoration: 'none',
-                                                        color: 'blue',
-                                                    }}
-                                                    target="_blank"
-                                                    href={row.link}
-                                                >
-                                                    {row.name}
-                                                </Link>
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {row.apparent_t ? row.apparent_t : 'No Data'}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {row.lat ? row.lat : 'No Data'}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {row.lon ? row.lon : 'No Data'}
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                            )}
+                            {data.array
+                                .sort((x, y) => sortFn(x, y))
+                                .map((row) => {
+                                    const apptFloat = parseFloat(row.apparent_t);
+                                    console.log(apptFloat);
+                                    if (
+                                        row.name &&
+                                        row.name.length > 0 &&
+                                        apptFloat > parseInt(tempMin)
+                                    ) {
+                                        return (
+                                            <TableRow key={row.name}>
+                                                <TableCell component="th" scope="row">
+                                                    <Link
+                                                        style={{
+                                                            textDecoration: 'none',
+                                                            color: 'blue',
+                                                        }}
+                                                        target="_blank"
+                                                        href={data.link}
+                                                    >
+                                                        {row.name}
+                                                    </Link>
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    {row.apparent_t ? row.apparent_t : 'No Data'}
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    {row.lat ? row.lat : 'No Data'}
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    {row.lon ? row.lon : 'No Data'}
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    }
+                                })}
                         </TableBody>
                     </React.Fragment>
                 )}
@@ -84,8 +100,9 @@ const DataTable = ({ rows = {}, error = {} }) => {
 };
 
 DataTable.propTypes = {
-    rows: PropTypes.array,
-    error: PropTypes.object,
+    data: PropTypes.object,
+    error: PropTypes.string,
+    tempMin: PropTypes.string,
 };
 
 export default DataTable;

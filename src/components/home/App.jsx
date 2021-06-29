@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import MuiAlert from '@material-ui/lab/Alert';
 import DataTable from '../table/DataTable';
 import initialState from '../../common/state';
-import bomEndpoints from '../../common/data/bom-endpoints';
+import bomEndpoint from '../../common/data/bom-endpoints';
 import getBomData from '../../service/get-bom-data';
 
 // custom alert dialog from Material UI website
@@ -14,34 +14,34 @@ function Alert(props) {
 }
 
 const App = () => {
-    const [rows, setRows] = useState(initialState.rows);
+    const [data, setData] = useState(initialState.data);
     const [error, setError] = useState(initialState.error);
     const [open, setOpen] = useState(initialState.errorSnackbar);
 
     useEffect(() => {
-        bomEndpoints.forEach((endpoint) => {
-            getBomData(endpoint)
-                // foreach endpoint, getBomData, append to the array (rows)
-                .then(async (response) => {
-                    if (!response.ok) {
-                        return Promise.reject(response);
-                    }
-                    const data = await response.json();
-                    const dataObj = data.observations.data[0];
-                    dataObj.link = endpoint;
-                    setRows((oldRows) => [...oldRows, dataObj]); // append to existing state
-                })
-                // if error, setError, which should diplay Snackbar with error message (use default from spec)
-                .catch(async (error) => {
-                    const message = await error.json();
-                    setOpen(true);
-                    setError(
-                        `${error.status ? error.status : '503'}: ${
-                            message.error ? message.error : 'Service Unavailable'
-                        }`
-                    );
-                });
-        });
+        getBomData(bomEndpoint)
+            // foreach endpoint, getBomData, append to the array (rows)
+            .then(async (response) => {
+                if (!response.ok) {
+                    return Promise.reject(response);
+                }
+                const data = await response.json();
+                const dataObj = { array: [], link: '' };
+                const dataArray = data.observations.data;
+                dataObj.array = dataArray;
+                dataObj.link = bomEndpoint;
+                setData(dataObj);
+            })
+            // if error, setError, which should diplay Snackbar with error message (use default from spec)
+            .catch(async (error) => {
+                const message = await error.json();
+                setOpen(true);
+                setError(
+                    `${error.status ? error.status : '503'}: ${
+                        message.error ? message.error : 'Service Unavailable'
+                    }`
+                );
+            });
     }, []);
 
     const handleClose = (event, reason) => {
@@ -69,7 +69,7 @@ const App = () => {
             </Typography>
             <br />
             {/* table */}
-            <DataTable rows={rows} error={error} />
+            <DataTable data={data} error={error} tempMin={10} />
         </Container>
     );
 };

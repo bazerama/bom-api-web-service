@@ -1,5 +1,5 @@
 const initialState = {
-    rows: [],
+    data: { array: [], link: '' },
     error: '',
     errorSnackbar: false
 };
