@@ -25,4 +25,4 @@ RUN yarn build
 EXPOSE 4001
 
 # start app
-CMD ["pm2-runtime", "serve", "build", "4001", "--spa"]
+CMD ["pm2-runtime", "yarn", "run:docker"]
