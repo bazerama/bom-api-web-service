@@ -18,7 +18,7 @@
     "scripts": {
         "start": "PORT=4001 react-scripts start",
         "start:prod": "NODE_ENV=production pm2 serve build 4001 --spa --name website",
-        "start:docker": "docker run -d -p 4001:4001 bazerama/bom-api-web-service --name website",
+        "start:docker": "docker run --name website -d -p 4001:4001 bazerama/bom-api-web-service",
         "build": "react-scripts build",
         "build:docker": "docker build . -t bazerama/bom-api-web-service",
         "test": "react-scripts test",
