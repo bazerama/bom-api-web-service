@@ -3,7 +3,7 @@ module.exports = {
         {
             name: 'website',
             script: 'serve',
-            args: 'build 4001 --spa --name website',
+            args: 'build 4001',
             env_production: {
                 NODE_ENV: 'production'
             },

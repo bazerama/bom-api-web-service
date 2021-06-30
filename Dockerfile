@@ -25,5 +25,5 @@ RUN yarn build
 EXPOSE 4001
 
 # start app
-# CMD ["pm2-runtime", "ecosystem.config.js"]
-CMD ["yarn", "start"]
+CMD ["pm2-runtime", "ecosystem.config.js"]
+#CMD ["yarn", "start"]
