@@ -25,4 +25,4 @@ RUN yarn build
 EXPOSE 4001
 
 # start app
-CMD ["yarn", "start:prod"]
+CMD ["pm2-runtime", "serve", "build", "4001", "--spa"]
