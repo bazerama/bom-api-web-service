@@ -25,4 +25,4 @@ RUN yarn build
 EXPOSE 4001
 
 # start app
-CMD ["pm2-runtime", "yarn", "run:docker"]
+CMD ["pm2-runtime", "ecosystem.config.js"]
