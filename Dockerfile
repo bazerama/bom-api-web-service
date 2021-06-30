@@ -15,11 +15,11 @@ RUN yarn --silent global add react-scripts@3.4.1
 RUN yarn --silent global add serve
 RUN yarn --silent global add pm2
 
-# build production optimised app
-RUN yarn --silent build
-
 # add app
 COPY . ./
+
+# build production optimised app
+RUN yarn build
 
 # allow listening on 4001
 EXPOSE 4001
